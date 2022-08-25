@@ -36,7 +36,7 @@ class Solution {
 
 
     public static void main(String[] args) {
-        int n = 9;
+        int n = 15;
         System.out.println(new Solution().totalNQueens(n));
     }
 }
