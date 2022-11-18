@@ -14,13 +14,22 @@ class Solution {
             return dp[strIndex][expIndex];
         }
         boolean ans;
+        if (strIndex == s.length) {
+            ans = expIndex == e.length - 1;
+            dp[strIndex][expIndex] = ans;
+            return ans;
+        }
         if (expIndex == e.length) {
             ans = strIndex == s.length;//str是否到结束了
             dp[strIndex][expIndex] = ans;
             return ans;
         }
-        if (expIndex + 1 == e.length || e[expIndex + 1] != '*') {//exp最后一个字符 或者下一个字符不是* 正常比对
-            return strIndex != s.length && (e[expIndex] == s[strIndex] || e[expIndex] == '.') && process(s, e, strIndex + 1, expIndex + 1, dp);//还可以比对字符
+        if (expIndex + 1 == e.length) {//exp最后一个字符 或者下一个字符不是* 正常比对
+            if (e[expIndex] != '*') {
+                return strIndex != s.length && (e[expIndex] == s[strIndex] || e[expIndex] == '.') && process(s, e, strIndex + 1, expIndex + 1, dp);//还可以比对字符
+            } else {
+                return process(s, e, strIndex + 1, expIndex, dp);
+            }
         }
         while (strIndex != s.length && (e[expIndex] == s[strIndex] || e[expIndex] == '.')) {
             if (process(s, e, strIndex, expIndex + 2, dp)) {
@@ -35,7 +44,7 @@ class Solution {
     }
 
     public static void main(String[] args) {
-        String s = "aa", p = "a";
+        String s = "adceb", p = "*a*b";
         System.out.println(new Solution().isMatch(s, p));
     }
 }
